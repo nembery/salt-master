@@ -1,7 +1,7 @@
 version: '3'
 services:
   salt-master:
-    build: ./salt-master
+    image: saltstack/salt:2019.2.0
     container_name: provisoner
     ports:
       - "8000:8000"
