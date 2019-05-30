@@ -1,0 +1,7 @@
+venv
+.idea
+salt-master/autosign_grains/*
+salt-master/pki/*
+salt-master/run/*
+salt-minion/pki/*
+salt-minion/run/*

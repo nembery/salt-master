@@ -1,0 +1,8 @@
+version: '3'
+services:
+  content_downloader:
+    image: "nembery/panos_content_downloader:latest"
+    ports:
+     - "5003:5003"
+    volumes:
+      - /Users/nembery/.pan_cnc/panhandler/repositories/Broken/kitchen_sink/edl/content_updates:/var/tmp/content_updates/

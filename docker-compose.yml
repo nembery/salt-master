@@ -1,0 +1,34 @@
+version: '3'
+services:
+  salt-master:
+    build: ./salt-master
+    container_name: provisoner
+    ports:
+      - "8000:8000"
+      - "4505:4505"
+      - "4506:4506"
+    volumes:
+      - ./salt-master/salt:/srv/salt
+      - ./salt-master/pillar:/srv/pillar
+      - ./salt-master/pki:/etc/salt/pki/master
+      - ./salt-master/autosign_grains:/etc/salt/autosign_grains
+    environment:
+      - SALT_SHARED_SECRET=${SALT_SHARED_SECRET:-panhandler}
+      - SALT_MASTER_CONFIG={"autosign_grains_dir":"/etc/salt/autosign_grains"}
+  container_mgmt:
+    build: ./salt-minion
+    container_name: container_mgmt
+    volumes:
+      - ./salt-minion/run:/var/run/salt
+      - ./salt-minion/pki:/etc/salt/pki/minion
+      - /var/run/docker.sock:/var/run/docker.sock
+#      - ${HOME}/.docker:/root/.docker
+    environment:
+      - SALT_MINION_CONFIG={"master":"salt-master", "id":"container_mgmt","autosign_grains":["id"]}
+  panhandler:
+    image: "paloaltonetworks/panhandler:latest"
+    container_name: panhandler
+    ports:
+      - "8080:80"
+    volumes:
+      - ${HOME}:/root
