@@ -8,6 +8,8 @@ services:
       - "4505:4505"
       - "4506:4506"
     volumes:
+      - ./salt-master/config:/etc/salt/master.d
+      - ./salt-master/ssh:/root/.ssh
       - ./salt-master/salt:/srv/salt
       - ./salt-master/pillar:/srv/pillar
       - ./salt-master/pki:/etc/salt/pki/master
