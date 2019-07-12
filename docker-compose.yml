@@ -1,7 +1,7 @@
 version: '3'
 services:
   salt-master:
-    image: saltstack/salt:2019.2.0
+    build: salt-master
     container_name: provisoner
     ports:
       - "8000:8000"
@@ -15,4 +15,4 @@ services:
       - ./salt-master/pki:/etc/salt/pki/master
       - ./salt-master/autosign_grains:/etc/salt/autosign_grains
     environment:
-      - SALT_SHARED_SECRET=${SALT_SHARED_SECRET:not-so-secret}
+      - SALT_SHARED_SECRET=${SALT_SHARED_SECRET:-not-so-secret}
